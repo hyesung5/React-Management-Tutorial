@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import Customer from './components/Customet';
+import CustomerAdd from './components/CustomerAdd';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
@@ -47,9 +48,25 @@ props or state => shouldComponentUdate()
 */
 
 class App extends Component {
-  state ={
-    customers: "",
-    completed: 0
+
+  constructor(props){
+    super(props);
+    this.state= {
+      customers: '',
+      completed: 0
+
+    }
+
+  }
+
+  stateRefrash = () => {
+    this.setState({
+        customers: '',
+        completed: 0
+    });
+    this.callApi()
+     .then(res => this.setState({customers: res}))
+     .catch(err => console.log(err));
   }
 
   progress = () => {
@@ -117,6 +134,8 @@ class App extends Component {
       </TableBody>
      </Table>
      </Paper>
+
+     <CustomerAdd stateRefrash={this.stateRefrash} />
   </div>
     )
   }
