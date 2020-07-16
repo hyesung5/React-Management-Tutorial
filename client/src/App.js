@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import Customer from './components/Customet';
+import Customer from './components/Customer';
 import CustomerAdd from './components/CustomerAdd';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -59,7 +59,7 @@ class App extends Component {
 
   }
 
-  stateRefrash = () => {
+  stateRefresh = () => {
     this.setState({
         customers: '',
         completed: 0
@@ -105,6 +105,7 @@ class App extends Component {
               <TableCell>생년월일</TableCell>
               <TableCell>성별</TableCell>
               <TableCell>직업</TableCell>
+              <TableCell>설정</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -114,6 +115,7 @@ class App extends Component {
      {this.state.customers? this.state.customers.map(customer => {
        return (
          <Customer 
+         stateRefresh={this.stateRefresh}
          key={customer.id}
           id={customer.id}
           name={customer.name}
