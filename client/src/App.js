@@ -7,6 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -19,7 +20,13 @@ overfolwX: "auto"
 table:{
 minWidth: 1080
 
+},
+progress: {
+  margin : theme.spacing(2)
+
 }
+
+
 
 })
 // const customers= [{
@@ -48,16 +55,42 @@ minWidth: 1080
 // }
 // ]
 
+
+/*
+    1) constructor()
+    
+    2) componentWillMount
+
+    3) render()
+
+    4) componentDidMount()
+*/
+
+/*
+
+props or stata 값을 변경되는 경우에는  shouldComponentUdate() 사용하고 render 함수를 불러온후 새로갱신처리 
+props or state => shouldComponentUdate()
+*/
+
 class App extends Component {
   state ={
     customers: "",
+    completed: 0
   }
 
+  progress = () => {
+    const {completed} = this.state;
+
+    this.setState({
+      completed: completed >= 100 ? 0 : completed + 1
+    });
+  };
 
   componentDidMount(){
-    this.callApi()
-    .then(res => this.setState({customers: res}))
-    .catch(err => console.log(err));
+    this.timer = setInterval(this.progress, 20);
+     this.callApi()
+     .then(res => this.setState({customers: res}))
+     .catch(err => console.log(err));
 
   }
 
@@ -99,7 +132,14 @@ class App extends Component {
           image={customer.image}
          />
        )
-     }) : ""}
+     }) : 
+     <TableRow>
+        <TableCell colSpan="6"  align="center">
+          <CircularProgress  className={classes.progress} variant="determinate" value={this.state.completed}/>
+
+        </TableCell>
+     </TableRow>
+     }
       </TableBody>
      </Table>
      </Paper>
