@@ -136,8 +136,8 @@ class App extends Component {
       </TableBody>
      </Table>
      </Paper>
-
-     <CustomerAdd stateRefrash={this.stateRefrash} />
+                    
+     <CustomerAdd stateRefresh={this.stateRefresh} />
   </div>
     )
   }
